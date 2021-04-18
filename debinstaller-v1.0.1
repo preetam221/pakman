@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ "$UID" == "0" ]
+then
+    echo Drag and drop the .deb file here and press \'ENTER\':
+    read input
+    path=$( echo $input | tr -d \' )
+    dpkg -i $path
+else
+    echo -e "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./debinstaller-v1.0.1
+fi

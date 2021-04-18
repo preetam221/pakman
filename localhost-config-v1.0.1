@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ "$UID" == "0" ]
+then
+    echo Downloading xampp server for localhost...
+    apt -y install wget figlet
+    wget https://www.apachefriends.org/xampp-files/8.0.3/xampp-linux-x64-8.0.3-0-installer.run
+    chmod +x xampp-linux-x64-8.0.3-0-installer.run
+    echo 
+    echo Done.
+    echo 
+    echo Starting xampp server installation...
+    ./xampp-linux-x64-8.0.3-0-installer.run
+    echo 
+    rm xampp-linux-x64-8.0.3-0-installer.run
+    echo Done.
+    echo Developed by 
+    figlet Preetam Paul.
+    echo Exiting... 
+else
+    echo -e "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./localhost-config-v1.0.1
+fi

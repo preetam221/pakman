@@ -1,0 +1,91 @@
+#!/bin/bash
+codename=$( cat /etc/os-release | grep VERSION_CODENAME | cut -d = -f 2 )
+if [ "$codename" != "\"kali-rolling\"" ]
+then
+echo This script is only for kALI Linux
+exit 1
+fi
+if [ "$UID" == "0" ]
+then
+    if [ -e /bin/pkg-updater ]
+    then
+        echo Updating the Updater......
+        rm /bin/pkg-updater
+        echo "#!/bin/bash" >> /bin/pkg-updater
+        echo "echo Refreshing repositories......." >> /bin/pkg-updater
+        echo "sudo apt update" >> /bin/pkg-updater
+        echo "" >> /bin/pkg-updater
+        echo "echo Updating packages....." >> /bin/pkg-updater
+        echo "sudo apt full-upgrade" >> /bin/pkg-updater
+        echo "" >> /bin/pkg-updater
+        echo "echo Do you want to clean unnecessary cache?[Y/n]" >> /bin/pkg-updater
+        echo "read answ" >> /bin/pkg-updater
+        echo "if [ \"\$answ\" == \"n\" ] || [ \"\$answ\" == \"N\" ]" >> /bin/pkg-updater
+        echo "then" >> /bin/pkg-updater
+        echo "exit 1" >> /bin/pkg-updater
+        echo "else" >> /bin/pkg-updater
+        echo "echo Cleaning software cache....." >> /bin/pkg-updater
+        echo "sudo apt autoremove" >> /bin/pkg-updater
+        echo "sudo apt clean" >> /bin/pkg-updater
+        echo "sudo apt autoclean" >> /bin/pkg-updater
+        echo "fi" >> /bin/pkg-updater
+        echo "echo " >> /bin/pkg-updater
+        echo "echo Prosess complited successfully. No error ocurred." >> /bin/pkg-updater
+        echo "echo Exiting." >> /bin/pkg-updater
+        echo "exit" >> /bin/pkg-updater
+        chmod +x /bin/pkg-updater
+    else
+        echo Creating Updater file......
+        echo "#!/bin/bash" >> /bin/pkg-updater
+        echo "echo Refreshing repositories......." >> /bin/pkg-updater
+        echo "sudo apt update" >> /bin/pkg-updater
+        echo "" >> /bin/pkg-updater
+        echo "echo Updating packages....." >> /bin/pkg-updater
+        echo "sudo apt full-upgrade" >> /bin/pkg-updater
+        echo "" >> /bin/pkg-updater
+        echo "echo Do you want to clean unnecessary cache?[Y/n]" >> /bin/pkg-updater
+        echo "read answ" >> /bin/pkg-updater
+        echo "if [ \"\$answ\" == \"n\" ] || [ \"\$answ\" == \"N\" ]" >> /bin/pkg-updater
+        echo "then" >> /bin/pkg-updater
+        echo "exit 1" >> /bin/pkg-updater
+        echo "else" >> /bin/pkg-updater
+        echo "echo Cleaning software cache....." >> /bin/pkg-updater
+        echo "sudo apt autoremove" >> /bin/pkg-updater
+        echo "sudo apt clean" >> /bin/pkg-updater
+        echo "sudo apt autoclean" >> /bin/pkg-updater
+        echo "fi" >> /bin/pkg-updater
+        echo "echo " >> /bin/pkg-updater
+        echo "echo Prosess complited successfully. No error ocurred." >> /bin/pkg-updater
+        echo "echo Exiting." >> /bin/pkg-updater
+        echo "exit" >> /bin/pkg-updater
+        chmod +x /bin/pkg-updater
+    fi
+    echo 
+    if [ -e /usr/share/applications/pkg.updater.desktop ]
+    then
+        echo Updating application menu shotcut....
+        rm /usr/share/applications/pkg.updater.desktop
+        echo "[Desktop Entry]" >> /usr/share/applications/pkg.updater.desktop
+        echo "Name=Updater" >> /usr/share/applications/pkg.updater.desktop
+        echo "Exec=pkg-updater" >> /usr/share/applications/pkg.updater.desktop
+        echo "Comment=Update software" >> /usr/share/applications/pkg.updater.desktop
+        echo "Terminal=true" >> /usr/share/applications/pkg.updater.desktop
+        echo "Icon=update" >> /usr/share/applications/pkg.updater.desktop
+        echo "Type=Application" >> /usr/share/applications/pkg.updater.desktop
+    else
+        echo Creating application menu shotcut....
+        echo "[Desktop Entry]" >> /usr/share/applications/pkg.updater.desktop
+        echo "Name=Updater" >> /usr/share/applications/pkg.updater.desktop
+        echo "Exec=pkg-updater" >> /usr/share/applications/pkg.updater.desktop
+        echo "Comment=Update software" >> /usr/share/applications/pkg.updater.desktop
+        echo "Terminal=true" >> /usr/share/applications/pkg.updater.desktop
+        echo "Icon=update" >> /usr/share/applications/pkg.updater.desktop
+        echo "Type=Application" >> /usr/share/applications/pkg.updater.desktop
+    fi
+    echo 
+    echo Prosess complited successfully.
+    echo Exiting.
+else
+    echo -e "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./updater-v1.1.5
+fi

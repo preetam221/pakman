@@ -1,0 +1,82 @@
+#!/bin/bash
+codename=$( cat /etc/os-release | grep VERSION_CODENAME | cut -d = -f 2 )
+if [ "$codename" != "\"kali-rolling\"" ]
+then
+    echo This script is only for kALI Linux
+    exit 1
+fi
+if [ "$UID" == "0" ]
+then
+    if [ -e /usr/share/applications/appstore.gnome.software.desktop ]
+    then
+        echo AppStore is installed. Do you want to remove it?[Y/n]
+        read ans1
+        if [ "$ans1" == "n" ] || [ "$ans1" == "N" ]
+            exit 1
+        else
+            rm /etc/apt/sources.list
+            mv /etc/apt/sources.list.bkup /etc/apt/sources.list
+            rm /usr/share/applications/appstore.gnome.software.desktop
+            echo Appstore removed successfully. Do you want to install any other package manager?[Y/n]
+            read ans2
+            if [ "$ans2" == "n" ] || [ "$ans2" == "N" ]
+            then
+                exit 1
+            else
+                echo "
+                Enter a number from the following...
+                1. Gnome packagekit
+                2. Synaptic"
+                read num
+                if [ -z $num ]
+                then
+                echo "Invalid option.
+                Exiting..."
+                exit 1
+                fi
+                if [ "$num" == "1" ]
+                then
+                    apt -y install gnome-packagekit
+                fi
+                if [ "$num" == "2" ]
+                then
+                    apt -y install synaptic
+                fi
+            fi
+            echo Process complited successfully.
+            echo Developed by...
+            figlet Preetam Paul.
+            echo Exiting...
+            exit 1
+        fi
+        if [ -e ~/zshrc.bkup ]
+        then
+            echo Do you want to reset terminal?[Y/n]
+            read ans3
+            if [ "$ans3" == "n" ] || [ "$ans3" == "N" ]
+            then
+                exit 1
+            else
+                echo Enter your username\(E.g.:john\)
+                read user
+                cp ~/.bashrc.bkup ~/.bashrc
+                cp /home/$user/.bashrc.bkup /home/$user/.bashrc
+                cp ~/.zshrc ~/.zshrc.bkup
+                cp /home/$user/.zshrc.bkup /home/$user/.zshrc
+            fi
+            echo Process complited successfully.
+            echo Developed by...
+            figlet Preetam Paul.
+            echo Exiting
+        else
+            exit 1
+        fi
+    else
+        echo Appstore is not installed.
+        echo Exiting...
+        exit 1
+    fi
+else
+    echo -e "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./reset-v1.0.1
+fi

@@ -1,0 +1,29 @@
+#!/bin/bash
+if [ "$UID" == "0" ]
+then
+    echo Do you want to want to do?
+    echo Type \'i\' to install or \'r\' to remove and press \'Enter\':
+    read ans
+    if [ "$ans" == "i" ] || [ "$ans" == "I" ]
+    then
+        echo Drag and drop the script file here and press \'ENTER\':
+        read input
+        path=$( echo $input | tr -d \' )
+        echo Installing script command...
+        chmod +x $path
+        cp $path /bin/
+        echo 
+        echo Done.
+    else
+        echo Type the command you want to remove and press \'Enter\':
+        read input
+        path=$( echo $input | tr -d \' )
+        echo Removing command...
+        rm $path
+        echo 
+        echo Done.
+    fi
+else
+    echo -e "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./installer-v1.0.1
+fi
