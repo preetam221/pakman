@@ -1,0 +1,41 @@
+#!/bin/bash
+codename=$( cat /etc/os-release | grep VERSION_CODENAME | cut -d = -f 2 )
+if [ "$codename" != "\"kali-rolling\"" ]
+then
+    echo This script is only for kALI Linux
+    exit 1
+fi
+if [ "$UID" == "0" ]
+then
+    echo Adding debian repository to kali...
+    if [ -e /etc/apt/sources.list.d/debian-sources.list ]
+    then
+        rm /etc/apt/sources.list.d/debian-sources.list
+        echo "############################################" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "#                                          #" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "#   Official repository of debian buster   #" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "#                                          #" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "############################################" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "deb http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "deb-src http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
+    else
+        echo "############################################" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "#                                          #" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "#   Official repository of debian buster   #" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "#                                          #" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "############################################" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "deb http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
+        echo "deb-src http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
+    fi
+    echo 
+    echo Done.
+    echo 
+    echo Refreshing the repositories...
+    echo 
+    apt update
+else
+    echo -e "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./debian-repo-for-kali-v1.0.1
+fi
