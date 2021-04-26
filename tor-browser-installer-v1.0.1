@@ -1,0 +1,37 @@
+#!/bin/bash
+if [ "$UID" == "0" ]
+then
+    if [ -e /opt/tor-browser ]
+    then
+        sudo rm -r /opt/tor-browser
+    fi
+    if [ -e ]
+    then
+        rm /usr/share/applications/tor-browser.desktop
+    fi
+    echo Drag and drop the official tor browser archive package:
+    read input
+    tor=$( echo $input | tr -d \' )
+    tar -xf $tor tor-browser_en-US/Browser/
+    path=$( pwd )
+    mv $path/tor-browser_en-US/Browser /opt/
+    mv /opt/Browser /opt/tor-browser
+    chown -R 1000:1000 /opt/tor-browser
+    echo "[Desktop Entry]" >> /usr/share/applications/tor-browser.desktop
+    echo "Name=TOR Browser" >> /usr/share/applications/tor-browser.desktop
+    echo "Exec=/opt/tor-browser/firefox" >> /usr/share/applications/tor-browser.desktop
+    echo "Comment=Browse the DEEP" >> /usr/share/applications/tor-browser.desktop
+    echo "Terminal=false" >> /usr/share/applications/tor-browser.desktop
+    echo "Icon=/opt/tor-browser/browser/chrome/icons/default/default128.png" >> /usr/share/applications/tor-browser.desktop
+    echo "Type=Application" >> /usr/share/applications/tor-browser.desktop
+    echo "Categories=Internet;" >> /usr/share/applications/tor-browser.desktop
+    rm -r $path/tor-browser_en-US
+    echo Done.
+    exit 1
+else
+    echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    cmd=$( sudo find ~/ -iname tor-browser-installer-v1.0.1 )
+    sudo $cmd
+    exit 1
+fi
+
