@@ -1,0 +1,42 @@
+#!/bin/bash
+codename=$( cat /etc/os-release | grep VERSION_CODENAME | cut -d = -f 2 )
+if [ "$codename" != "\"kali-rolling\"" ]
+then
+echo This script is only for kALI Linux
+exit 1
+fi
+if [ "$UID" == "0" ]
+then
+    if [ -e /usr/share/applications/bt-activator.desktop ]
+    then
+        rm /usr/share/applications/bt-activator.desktop
+        echo Updating BT Activator...
+        echo "[Desktop Entry]" >> /usr/share/applications/bt-activator.desktop
+        echo "Name=BT Activator" >> /usr/share/applications/bt-activator.desktop
+        echo "Exec=systemctl start bluetooth.service" >> /usr/share/applications/bt-activator.desktop
+        echo "Comment=Start the bluetooth service" >> /usr/share/applications/bt-activator.desktop
+        echo "Terminal=false" >> /usr/share/applications/bt-activator.desktop
+        echo "Icon=bluetooth" >> /usr/share/applications/bt-activator.desktop
+        echo "Type=Application" >> /usr/share/applications/bt-activator.desktop
+        echo 
+        echo Done.
+        exit 1
+    else
+        echo Installing BT Activator...
+        echo "[Desktop Entry]" >> /usr/share/applications/bt-activator.desktop
+        echo "Name=BT Activator" >> /usr/share/applications/bt-activator.desktop
+        echo "Exec=systemctl start bluetooth.service" >> /usr/share/applications/bt-activator.desktop
+        echo "Comment=Start the bluetooth service" >> /usr/share/applications/bt-activator.desktop
+        echo "Terminal=false" >> /usr/share/applications/bt-activator.desktop
+        echo "Icon=bluetooth" >> /usr/share/applications/bt-activator.desktop
+        echo "Type=Application" >> /usr/share/applications/bt-activator.desktop
+        echo 
+        echo Done.
+        exit 1
+    fi
+    exit 1
+else
+    echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
+    sudo ./bta-installer-v1.0.1.
+    exit 1
+fi
