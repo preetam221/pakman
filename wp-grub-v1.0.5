@@ -12,10 +12,10 @@ then
     if [ "$i" == "y" ] || [ "$i" == "Y" ]
     then
         echo Enter the name of the theme:
-        read N
-        t=$N
+        read TM
+        T=$( echo $TM | tr -d \' )
     else
-        t=kali
+        T=kali
     fi
     echo Do you want to use different images for grub default background and grub theme background?[Y/n]
     read a
@@ -25,38 +25,42 @@ then
         read input
         path=$( echo $input | tr -d \' )
         echo Setting up wallpapers...
-        cp -r $path /usr/share/grub/themes/kali/background.png
-        cp -r $path /usr/share/grub/themes/kali/grub-4x3.png
-        cp -r $path /usr/share/grub/themes/kali/grub-16x9.png
-        cp -r $path /boot/grub/themes/kali/background.png
-        cp -r $path /boot/grub/themes/kali/grub-4x3.png
-        cp -r $path /boot/grub/themes/kali/grub-16x9.png
+        cp -r $path /usr/share/grub/themes/$T/background.png
+        cp -r $path /usr/share/grub/themes/$T/grub-4x3.png
+        cp -r $path /usr/share/grub/themes/$T/grub-16x9.png
+        cp -r $path /boot/grub/themes/$T/background.png
+        cp -r $path /boot/grub/themes/$T/grub-4x3.png
+        cp -r $path /boot/grub/themes/$T/grub-16x9.png
         echo Done.
+        exit 1
     else
         echo Drag and drop the image for grub theme here and press \'ENTER\':
         read input1
         path1=$( echo $input1 | tr -d \' )
         echo Setting up wallpapers...
-        cp -r $path1 /boot/grub/themes/kali/background.png
-        cp -r $path1 /boot/grub/themes/kali/grub-4x3.png
-        cp -r $path1 /boot/grub/themes/kali/grub-16x9.png
+        cp -r $path1 /boot/grub/themes/$T/background.png
+        cp -r $path1 /boot/grub/themes/$T/grub-4x3.png
+        cp -r $path1 /boot/grub/themes/$T/grub-16x9.png
         echo Done.
         echo 
         echo Drag and drop the image for grub default here and press \'ENTER\':
         read input2
         path2=$( echo $input2 | tr -d \' )
         echo Setting up wallpapers...
-        cp -r $path2 /usr/share/grub/themes/kali/background.png
-        cp -r $path2 /usr/share/grub/themes/kali/grub-4x3.png
-        cp -r $path2 /usr/share/grub/themes/kali/grub-16x9.png
+        cp -r $path2 /usr/share/grub/themes/$T/background.png
+        cp -r $path2 /usr/share/grub/themes/$T/grub-4x3.png
+        cp -r $path2 /usr/share/grub/themes/$T/grub-16x9.png
         echo Done.
+        exit 1
     fi
     echo 
     echo Updating grub...
     update-grub
     echo 
     echo Exiting...
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./wp-grub-v1.0.5
+    exit 1
 fi
