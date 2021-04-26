@@ -16,7 +16,9 @@ then
     echo Developed by 
     figlet Preetam Paul.
     echo Exiting... 
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./localhost-config-v1.0.1
+    exit 1
 fi
