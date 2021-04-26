@@ -17,6 +17,7 @@ then
         echo "deb http://http.kali.org/kali kali-last-snapshot main non-free contrib" >> /etc/apt/sources.list
         echo "deb http://http.kali.org/kali kali-experimental main non-free contrib" >> /etc/apt/sources.list
         echo "deb-src http://http.kali.org/kali kali-rolling main non-free contrib" >> /etc/apt/sources.list
+        exit 1
     else
         mv /etc/apt/sources.list /etc/apt/sources.list.bkup
         echo Modifying software repositories...
@@ -27,6 +28,7 @@ then
         echo "deb http://http.kali.org/kali kali-last-snapshot main non-free contrib" >> /etc/apt/sources.list
         echo "deb http://http.kali.org/kali kali-experimental main non-free contrib" >> /etc/apt/sources.list
         echo "deb-src http://http.kali.org/kali kali-rolling main non-free contrib" >> /etc/apt/sources.list
+        exit 1
     fi
     echo 
     echo Done.
@@ -59,6 +61,7 @@ then
         then
             chmod +x updater-v1.1.5
             ./updater-v1.1.5
+            exit 1
         else
             File not found. Do you want to download it?[Y/n]
             read reply
@@ -67,8 +70,11 @@ then
                 exit 1
             else
                 curl https://raw.githubusercontent.com/preetam221/kali-linux-frontend-package-managemaent/main/updater-v1.1.5 >> updater-v1.1.5 && chmod +x updater-v1.1.5 && ./updater-v1.1.5 && rm updater-v1.1.5
+                exit 1
             fi
+            exit 1
         fi
+        exit 1
     fi
     echo Do you want to create custom terminal?[Y/n]
     read ans2
@@ -89,6 +95,7 @@ then
         cp /home/$user/.zshrc /home/$user/.zshrc.bkup
         echo "figlet $name" >> /home/$user/.zshrc
         echo Done.
+        exit 1
     fi
     echo 
     echo Process complited successfully.
@@ -96,7 +103,9 @@ then
     echo Developed by...
     figlet Preetam Paul
     echo Exiting...
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./config-v1.0.5
+    exit 1
 fi
