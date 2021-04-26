@@ -5,7 +5,9 @@ then
     read input
     path=$( echo $input | tr -d \' )
     dpkg -i $path
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./debinstaller-v1.0.1
+    exit 1
 fi
