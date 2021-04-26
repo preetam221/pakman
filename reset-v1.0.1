@@ -30,23 +30,23 @@ then
                 read num
                 if [ -z $num ]
                 then
-                echo "Invalid option.
-                Exiting..."
-                exit 1
+                    echo "Invalid option.
+                    Exiting..."
+                    exit 1
                 fi
                 if [ "$num" == "1" ]
                 then
                     apt -y install gnome-packagekit
+                    exit 1
                 fi
                 if [ "$num" == "2" ]
                 then
                     apt -y install synaptic
+                    exit 1
                 fi
+                exit 1
             fi
             echo Process complited successfully.
-            echo Developed by...
-            figlet Preetam Paul.
-            echo Exiting...
             exit 1
         fi
         if [ -e ~/zshrc.bkup ]
@@ -63,20 +63,25 @@ then
                 cp /home/$user/.bashrc.bkup /home/$user/.bashrc
                 cp ~/.zshrc ~/.zshrc.bkup
                 cp /home/$user/.zshrc.bkup /home/$user/.zshrc
+                exit 1
             fi
             echo Process complited successfully.
             echo Developed by...
             figlet Preetam Paul.
-            echo Exiting
+            echo Exiting...
+            exit 1
         else
             exit 1
         fi
+        exit 1
     else
         echo Appstore is not installed.
         echo Exiting...
         exit 1
     fi
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./reset-v1.0.1
+    exit 1
 fi
