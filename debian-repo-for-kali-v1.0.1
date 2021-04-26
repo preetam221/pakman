@@ -19,6 +19,7 @@ then
         echo "" >> /etc/apt/sources.list.d/debian-sources.list
         echo "deb http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
         echo "deb-src http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
+        exit 1
     else
         echo "############################################" >> /etc/apt/sources.list.d/debian-sources.list
         echo "#                                          #" >> /etc/apt/sources.list.d/debian-sources.list
@@ -28,6 +29,7 @@ then
         echo "" >> /etc/apt/sources.list.d/debian-sources.list
         echo "deb http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
         echo "deb-src http://httpredir.debian.org/debian buster main" >> /etc/apt/sources.list.d/debian-sources.list
+        exit 1
     fi
     echo 
     echo Done.
@@ -35,7 +37,9 @@ then
     echo Refreshing the repositories...
     echo 
     apt update
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./debian-repo-for-kali-v1.0.1
+    exit 1
 fi
