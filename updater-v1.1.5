@@ -34,6 +34,7 @@ then
         echo "echo Exiting." >> /bin/pkg-updater
         echo "exit" >> /bin/pkg-updater
         chmod +x /bin/pkg-updater
+        exit 1
     else
         echo Creating Updater file......
         echo "#!/bin/bash" >> /bin/pkg-updater
@@ -59,6 +60,7 @@ then
         echo "echo Exiting." >> /bin/pkg-updater
         echo "exit" >> /bin/pkg-updater
         chmod +x /bin/pkg-updater
+        exit 1
     fi
     echo 
     if [ -e /usr/share/applications/pkg.updater.desktop ]
@@ -72,6 +74,7 @@ then
         echo "Terminal=true" >> /usr/share/applications/pkg.updater.desktop
         echo "Icon=update" >> /usr/share/applications/pkg.updater.desktop
         echo "Type=Application" >> /usr/share/applications/pkg.updater.desktop
+        exit 1
     else
         echo Creating application menu shotcut....
         echo "[Desktop Entry]" >> /usr/share/applications/pkg.updater.desktop
@@ -81,11 +84,14 @@ then
         echo "Terminal=true" >> /usr/share/applications/pkg.updater.desktop
         echo "Icon=update" >> /usr/share/applications/pkg.updater.desktop
         echo "Type=Application" >> /usr/share/applications/pkg.updater.desktop
+        exit 1
     fi
     echo 
     echo Prosess complited successfully.
-    echo Exiting.
+    echo Exiting...
+    exit 1
 else
     echo "This Script must be run with root privileges; Enter your password below to continue or press 'Ctrl' + 'C' to exit:"
     sudo ./updater-v1.1.5
+    exit 1
 fi
